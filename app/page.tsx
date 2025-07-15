@@ -35,7 +35,7 @@ export default function WaitlistPage() {
         <img 
           src="/placeholder.png" 
           alt="Background"
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain md:object-cover"
           loading="eager"
         />
       </picture>
