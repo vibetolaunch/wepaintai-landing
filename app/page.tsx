@@ -1,6 +1,15 @@
 "use client"
 
+import { useEffect, useRef } from 'react'
+
 export default function WaitlistPage() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.5 // Slow down to 50% speed
+    }
+  }, [])
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden">
@@ -12,6 +21,7 @@ export default function WaitlistPage() {
       
       {/* Video overlay */}
       <video
+        ref={videoRef}
         autoPlay
         loop
         muted
