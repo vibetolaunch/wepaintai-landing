@@ -1,47 +1,57 @@
 "use client"
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 export default function WaitlistPage() {
   const videoRef = useRef<HTMLVideoElement>(null)
+  const [videoError, setVideoError] = useState(false)
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.5 // Slow down to 50% speed
-      // Force play on iOS
-      videoRef.current.play().catch(e => {
-        console.log("Autoplay failed:", e);
-      });
+    const video = videoRef.current;
+    if (video) {
+      // Set playback rate
+      video.playbackRate = 0.5;
+      
+      // Try to play video
+      const playPromise = video.play();
+      
+      if (playPromise !== undefined) {
+        playPromise
+          .then(() => {
+            console.log("Video playing");
+          })
+          .catch((error) => {
+            console.error("Video play error:", error);
+            setVideoError(true);
+          });
+      }
     }
   }, [])
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden">
-      {/* Fallback background image */}
-      <img 
-        src="/placeholder.png"
-        alt="Background"
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
-      />
+      {/* Background with fallback */}
+      <div className="absolute inset-0">
+        <img 
+          src="/placeholder.png" 
+          alt="" 
+          className="w-full h-full object-cover"
+        />
+      </div>
       
       {/* Video overlay */}
       <video
         ref={videoRef}
+        className="absolute inset-0 w-full h-full object-cover"
         autoPlay
-        loop
         muted
+        loop
         playsInline
-        webkit-playsinline="true"
         preload="auto"
-        className="absolute top-0 left-0 w-full h-full object-cover z-0"
         poster="/placeholder.png"
-        onLoadedData={() => {
-          if (videoRef.current) {
-            videoRef.current.play().catch(e => console.log("Video play failed:", e));
-          }
-        }}
       >
         <source src="/demo-vid-landing.mp4" type="video/mp4" />
+        <source src="/demo-vid-landing.mp4#t=0.1" type="video/mp4" />
       </video>
       <div className="relative z-10">
         <a
