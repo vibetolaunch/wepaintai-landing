@@ -43,7 +43,7 @@ export default function WaitlistPage() {
       {/* Video overlay - will play on desktop, might not on mobile */}
       <video
         ref={videoRef}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-contain md:object-cover"
         autoPlay
         muted
         loop
