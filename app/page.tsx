@@ -29,17 +29,18 @@ export default function WaitlistPage() {
   }, [])
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden">
-      {/* Background with fallback */}
-      <div className="absolute inset-0">
+    <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden bg-black">
+      {/* Static background image for mobile */}
+      <picture className="absolute inset-0 w-full h-full">
         <img 
           src="/placeholder.png" 
-          alt="" 
+          alt="Background"
           className="w-full h-full object-cover"
+          loading="eager"
         />
-      </div>
+      </picture>
       
-      {/* Video overlay */}
+      {/* Video overlay - will play on desktop, might not on mobile */}
       <video
         ref={videoRef}
         className="absolute inset-0 w-full h-full object-cover"
@@ -47,11 +48,9 @@ export default function WaitlistPage() {
         muted
         loop
         playsInline
-        preload="auto"
-        poster="/placeholder.png"
+        preload="metadata"
       >
         <source src="/demo-vid-landing.mp4" type="video/mp4" />
-        <source src="/demo-vid-landing.mp4#t=0.1" type="video/mp4" />
       </video>
       <div className="relative z-10">
         <a
