@@ -8,15 +8,20 @@ export default function WaitlistPage() {
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.playbackRate = 0.5 // Slow down to 50% speed
+      // Force play on iOS
+      videoRef.current.play().catch(e => {
+        console.log("Autoplay failed:", e);
+      });
     }
   }, [])
 
   return (
     <div className="min-h-screen w-full flex items-center justify-center relative overflow-hidden">
       {/* Fallback background image */}
-      <div 
-        className="absolute top-0 left-0 w-full h-full bg-cover bg-center z-0"
-        style={{ backgroundImage: 'url(/placeholder.png)' }}
+      <img 
+        src="/placeholder.png"
+        alt="Background"
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
       />
       
       {/* Video overlay */}
@@ -26,8 +31,15 @@ export default function WaitlistPage() {
         loop
         muted
         playsInline
+        webkit-playsinline="true"
+        preload="auto"
         className="absolute top-0 left-0 w-full h-full object-cover z-0"
         poster="/placeholder.png"
+        onLoadedData={() => {
+          if (videoRef.current) {
+            videoRef.current.play().catch(e => console.log("Video play failed:", e));
+          }
+        }}
       >
         <source src="/demo-vid-landing.mp4" type="video/mp4" />
       </video>
