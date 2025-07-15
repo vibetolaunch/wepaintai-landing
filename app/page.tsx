@@ -33,7 +33,7 @@ export default function WaitlistPage() {
       {/* Static background image for mobile */}
       <picture className="absolute inset-0 w-full h-full">
         <img 
-          src="/placeholder.png" 
+          src="/wepaint-back.jpg" 
           alt="Background"
           className="w-full h-full object-contain md:object-cover"
           loading="eager"
