@@ -1,200 +1,90 @@
-"use client"
-
-import { useEffect, useRef, useState } from 'react'
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Github, MessageCircle, Youtube, Menu, X, Sparkles, Palette, Zap } from 'lucide-react'
 
-export default function WaitlistPage() {
-  const videoRef = useRef<HTMLVideoElement>(null)
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [mounted, setMounted] = useState(false)
-
-  useEffect(() => {
-    setMounted(true)
-    const video = videoRef.current;
-    if (video) {
-      // Set playback rate
-      video.playbackRate = 0.5;
-      
-      // Try to play video
-      const playPromise = video.play();
-      
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log("Video playing");
-          })
-          .catch((error) => {
-            console.error("Video play error:", error);
-          });
-      }
-    }
-  }, [])
-
-  if (!mounted) {
-    return null
-  }
-
+export default function HomePage() {
   return (
-    <div className="min-h-screen w-full relative overflow-hidden bg-black">
-      {/* Video Background */}
-      <div className="absolute inset-0 w-full h-full">
-        {/* Video overlay */}
-        <video
-          ref={videoRef}
-          className="absolute inset-0 w-full h-full object-cover opacity-80"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-        >
-          <source src="/demo-vid-landing.mp4" type="video/mp4" />
-        </video>
-        
-        {/* Dark overlay for better text readability */}
-        <div className="absolute inset-0 bg-black/40" />
-      </div>
-
-      {/* Header */}
-      <header className="relative z-20 w-full">
-        <nav className="flex items-center justify-between p-6 lg:px-8">
-          {/* Logo */}
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
-              <Palette className="w-5 h-5 text-white" />
-            </div>
-            <span className="text-xl font-bold text-white">wepaint.ai</span>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            <Button 
-              asChild
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl"
-            >
-              <a href="https://app.wepaint.ai">Try Beta</a>
-            </Button>
-          </div>
-
-          {/* Mobile menu button */}
-          <button
-            className="md:hidden text-white p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+    <div className="min-h-screen flex flex-col">
+      <header className="w-full border-b">
+        <nav className="mx-auto max-w-6xl flex items-center justify-between p-4">
+          <a href="/" className="flex items-center gap-2" aria-label="wepaint.ai home">
+            <Image src="/logo.svg" alt="wepaint.ai" width={120} height={40} priority />
+          </a>
+          <Button asChild size="sm">
+            <a href="https://app.wepaint.ai">Try Beta</a>
+          </Button>
         </nav>
-
-        {/* Mobile Navigation */}
-        {isMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 right-0 bg-black/90 backdrop-blur-md border-t border-white/10">
-            <div className="flex flex-col space-y-4 p-6">
-              <Button 
-                asChild
-                className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl w-fit"
-              >
-                <a href="https://app.wepaint.ai">Try Beta</a>
-              </Button>
-            </div>
-          </div>
-        )}
       </header>
 
-      {/* Main Content */}
-      <main className="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-200px)] px-6 text-center">
-        {/* Hero Section */}
-        <div className="max-w-4xl mx-auto space-y-8">
-          {/* Badge */}
-          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 text-sm text-white">
-            <Sparkles className="w-4 h-4" />
-            <span>AI-Powered Creative Suite</span>
-          </div>
-
-          {/* Main Heading */}
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white leading-tight">
-            <span className="bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-              AI Paint & Image Editor
-            </span>
-            <br />
-            <span className="text-white">That's Easy</span>
+      <main className="flex-1">
+        <section className="mx-auto max-w-3xl px-4 py-24 text-center">
+          <h1 className="text-4xl md:text-6xl font-semibold tracking-tight">
+            Create. Paint. Edit. <br/>— with AI Help
           </h1>
-
-          {/* Subtitle */}
-          <p className="text-xl md:text-2xl text-white/80 max-w-2xl mx-auto leading-relaxed">
-            Create stunning artwork and edit images with the power of AI. 
-            No complex tools, just pure creativity unleashed.
+          <p className="mt-4 text-lg text-muted-foreground">
+            right in your browser and fully open source. 
           </p>
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
-            <Button 
-              asChild
-              size="lg"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all duration-200 shadow-2xl hover:shadow-blue-500/25 hover:scale-105"
-            >
-              <a href="https://app.wepaint.ai" className="flex items-center space-x-2">
-                <span>Try Beta Now</span>
-                <span className="text-2xl">🎨</span>
-              </a>
+          <div className="mt-8 flex items-center justify-center gap-4">
+            <Button asChild size="lg">
+              <a href="https://app.wepaint.ai">Try Beta</a>
             </Button>
+            <a
+              href="https://github.com/wepaintai/wepaintai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-muted-foreground hover:text-foreground"
+            >
+              View GitHub
+            </a>
           </div>
+        </section>
 
-          {/* Feature Pills */}
-          <div className="flex flex-wrap items-center justify-center gap-4 pt-8">
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 text-sm text-white">
-              <Zap className="w-4 h-4 text-yellow-400" />
-              <span>Lightning Fast</span>
+        {/* Product preview section */}
+        <section className="mx-auto max-w-6xl px-4 pb-24">
+          <div className="mx-auto max-w-5xl">
+            <div className="mb-3 inline-flex items-center rounded-full border px-3 py-1 text-xs text-muted-foreground">
+              In-app preview
             </div>
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 text-sm text-white">
-              <Palette className="w-4 h-4 text-pink-400" />
-              <span>AI-Powered</span>
+
+            <div className="rounded-xl border bg-background shadow-sm overflow-hidden">
+              {/* Window chrome */}
+              <div className="flex items-center justify-between border-b px-4 py-2 bg-muted/50">
+                <div className="flex items-center gap-2">
+                  <span className="h-3 w-3 rounded-full bg-red-500" aria-hidden />
+                  <span className="h-3 w-3 rounded-full bg-yellow-500" aria-hidden />
+                  <span className="h-3 w-3 rounded-full bg-green-500" aria-hidden />
+                </div>
+                <div className="text-xs text-muted-foreground">app.wepaint.ai</div>
+                <div className="w-14" aria-hidden />
+              </div>
+
+              {/* Aspect video container */}
+              <div className="aspect-video bg-black">
+                <video
+                  className="h-full w-full object-cover"
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  aria-label="wepaint.ai product preview video"
+                >
+                  <source src="/demo-vid-landing.mp4" type="video/mp4" />
+                </video>
+              </div>
             </div>
-            <div className="flex items-center space-x-2 bg-white/10 backdrop-blur-md border border-white/20 rounded-full px-4 py-2 text-sm text-white">
-              <Sparkles className="w-4 h-4 text-blue-400" />
-              <span>Easy to Use</span>
-            </div>
+
+            <p className="mt-3 text-center text-xs text-muted-foreground">
+              Preview of the beta editor experience.
+            </p>
           </div>
-        </div>
+        </section>
       </main>
 
-      {/* Social Links - Bottom Right */}
-      <div className="fixed bottom-8 right-8 z-20 flex flex-col gap-3">
-        <a 
-          href="https://github.com/wepaintai/wepaintai" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="group flex items-center justify-center w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110"
-          title="GitHub"
-        >
-          <Github className="w-5 h-5 group-hover:scale-110 transition-transform" />
-        </a>
-        
-        <a 
-          href="https://discord.gg/RMdcAw3T7Q" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="group flex items-center justify-center w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110"
-          title="Discord"
-        >
-          <MessageCircle className="w-5 h-5 group-hover:scale-110 transition-transform" />
-        </a>
-        
-        <a 
-          href="#" 
-          className="group flex items-center justify-center w-12 h-12 bg-white/10 backdrop-blur-md border border-white/20 hover:bg-white/20 text-white rounded-full transition-all duration-200 shadow-lg hover:shadow-xl hover:scale-110"
-          title="YouTube"
-        >
-          <Youtube className="w-5 h-5 group-hover:scale-110 transition-transform" />
-        </a>
-      </div>
-
-      {/* Floating Elements for Visual Interest */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-blue-400 rounded-full animate-pulse opacity-60" />
-        <div className="absolute top-3/4 right-1/4 w-3 h-3 bg-purple-400 rounded-full animate-pulse opacity-40 animation-delay-1000" />
-        <div className="absolute top-1/2 left-1/6 w-1 h-1 bg-pink-400 rounded-full animate-pulse opacity-80 animation-delay-2000" />
-      </div>
+      <footer className="border-t">
+        <div className="mx-auto max-w-6xl p-4 text-center text-sm text-muted-foreground">
+          © {new Date().getFullYear()} wepaint.ai
+        </div>
+      </footer>
     </div>
   )
 }

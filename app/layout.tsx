@@ -9,8 +9,8 @@ import { Analytics } from "@vercel/analytics/next"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "wepaint.ai - Coming Soon",
-  description: "Join the waitlist for wepaint.ai",
+  title: "wepaint.ai - ai paint image editor",
+  description: "easy online ai paint and image editor",
     generator: 'v0.dev'
 }
 
